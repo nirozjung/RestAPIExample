@@ -1,4 +1,4 @@
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml">
 <body>
     <h2>Jersey RESTful Web Application!</h2>
     <p><a href="webapi/myresource">Jersey resource</a>
