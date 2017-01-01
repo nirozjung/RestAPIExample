@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.karki.messenger.database.DatabaseClass;
+import com.karki.messenger.exception.DataNotFoundException;
 import com.karki.messenger.model.Message;
 
 public class MessageService {
@@ -23,7 +24,11 @@ public class MessageService {
 	}
 
 	public Message getMessage(long id) {
-		return messages.get(id);
+		Message message= messages.get(id);
+		if(message==null){ throw new DataNotFoundException("Message with id "+id+" not found");
+			}
+		return message;
+		
 	}
 	
 	public List<Message> getAllMessageForYear(int year){
@@ -31,7 +36,7 @@ public class MessageService {
 		Calendar cal=Calendar.getInstance();
 		for(Message msg:messages.values()){
 			cal.setTime(msg.getCreated());
-			System.out.println(cal);
+			System.out.println("Calendar stuff **** "+cal);
 			if(cal.get(Calendar.YEAR)==year)
 				messagesForYear.add(msg);
 		}
@@ -40,10 +45,8 @@ public class MessageService {
 	
 	public List<Message> getAllMessagesPaginated(int start, int size){
 		List<Message> messagesPaginated=new ArrayList<Message>(messages.values());
-		System.out.println(messages.values());
-
+		
 		if(start+size>messagesPaginated.size()) return new ArrayList<>();
-        
 		return messagesPaginated.subList( start, start + size );
 	}
 
